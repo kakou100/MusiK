@@ -66,8 +66,8 @@ public class AsyncPeachnnoteJSONData extends AsyncTask<String, Void, String> {
     protected void onPostExecute(String s) {
         ListView listview = (ListView) myActivity.findViewById(R.id.listview);
         listview.setVisibility(View.VISIBLE);
-        ArrayAdapter<String> tableau = new ArrayAdapter<String>(listview.getContext(),
-                R.layout.montexte);
+        ArrayAdapter<String> tableau = new ArrayAdapter<String>(
+                listview.getContext(), R.layout.line, R.id.monTexte);
 
         try {
             Log.i("s=",s);

@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         mSearchButton = (Button) findViewById(R.id.activity_main_search_btn);
         mFavoritesButton = (Button) findViewById(R.id.activity_main_favorites_btn);
         mSearchButton.setEnabled(false);
-        listview = (ListView)findViewById(R.id.listview);
+        ListView listview = (ListView) findViewById(R.id.listview);
         listview.setVisibility(View.INVISIBLE);
 
 
