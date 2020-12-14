@@ -27,13 +27,15 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import static com.example.musik.R.id.montexte;
+
 public class AsyncPeachnnoteJSONData extends AsyncTask<String, Void, String> {
 
-    ListView listview;
+    private AppCompatActivity myActivity;
 
-    public AsyncPeachnnoteJSONData(ListView listview) {
-        this.listview = listview;
 
+    public AsyncPeachnnoteJSONData(AppCompatActivity mainActivity) {
+            myActivity = mainActivity;
     }
 
     @Override
@@ -41,6 +43,7 @@ public class AsyncPeachnnoteJSONData extends AsyncTask<String, Void, String> {
         URL url = null;
         HttpURLConnection urlConnection = null;
         String line = null;
+        String s = null;
         try {
             url = new URL(strings[0]);
             urlConnection = (HttpURLConnection) url.openConnection(); // Open
@@ -50,26 +53,28 @@ public class AsyncPeachnnoteJSONData extends AsyncTask<String, Void, String> {
             while ((line = br.readLine()) != null) {
                 stringBuilder.append(line);
             }
-            return stringBuilder.toString();
+            s = stringBuilder.toString();
+            return s;
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
+        return s;
     }
-
 
 
     @Override
     protected void onPostExecute(String s) {
-        super.onPostExecute(s);
+        ListView listview = (ListView) myActivity.findViewById(R.id.listview);
         listview.setVisibility(View.VISIBLE);
         ArrayAdapter<String> tableau = new ArrayAdapter<String>(listview.getContext(),
                 R.layout.montexte);
+
         try {
+            Log.i("s=",s);
             JSONObject jsonObject = new JSONObject(s);
-            JSONArray array = new JSONArray(jsonObject.getString("items"));
-            for (int i = 0; i < array.length(); i++) {
-                JSONObject obj = new JSONObject(array.getString(i));
+            JSONArray items = jsonObject.getJSONArray("items");
+            for (int i = 0; i < items.length(); i++) {
+                JSONObject obj = new JSONObject(items.getString(i));
                 String title = obj.getString("title");
                 tableau.add(title);
             }
@@ -79,7 +84,6 @@ public class AsyncPeachnnoteJSONData extends AsyncTask<String, Void, String> {
         }
 
     }
+
 }
-
-
 

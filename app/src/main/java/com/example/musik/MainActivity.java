@@ -19,7 +19,6 @@ public class MainActivity extends AppCompatActivity {
     private EditText mResearchInput;
     private Button mSearchButton;
     private Button mFavoritesButton;
-    ProgressBar progressBar;
     ListView listview;
 
     @Override
@@ -55,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 research = mResearchInput.getText().toString();
-                AsyncPeachnnoteJSONData task = new AsyncPeachnnoteJSONData(listview);
+                AsyncPeachnnoteJSONData task = new AsyncPeachnnoteJSONData(MainActivity.this);
                 task.execute("http://www.peachnote.com/rest/api/v0/scoreSearchMeta"
                 + "?q=" + research);
             }
