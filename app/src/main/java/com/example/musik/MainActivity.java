@@ -2,10 +2,12 @@ package com.example.musik;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -20,6 +22,18 @@ public class MainActivity extends AppCompatActivity {
     private Button mSearchButton;
     private Button mFavoritesButton;
     ListView listview;
+
+    public static class InfoScore {
+        public String title;
+        public String scoreId;
+        public int countPage;
+        //constructor
+        public InfoScore(String s, String id, int p) {
+            title = s;
+            scoreId = id;
+            countPage = p;
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +77,16 @@ public class MainActivity extends AppCompatActivity {
         mFavoritesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+            }
+        });
+
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                listview.getAdapter().getItem(position);
+                Intent showPartitions = new Intent(MainActivity.this, ShowPartitions.class);
+                startActivity(showPartitions);
             }
         });
 

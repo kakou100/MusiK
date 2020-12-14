@@ -1,33 +1,22 @@
 package com.example.musik;
 
-import android.annotation.SuppressLint;
-import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ResourceBundle;
-
-import static com.example.musik.R.id.montexte;
 
 public class AsyncPeachnnoteJSONData extends AsyncTask<String, Void, String> {
 
@@ -66,7 +55,7 @@ public class AsyncPeachnnoteJSONData extends AsyncTask<String, Void, String> {
     protected void onPostExecute(String s) {
         ListView listview = (ListView) myActivity.findViewById(R.id.listview);
         listview.setVisibility(View.VISIBLE);
-        ArrayAdapter<String> tableau = new ArrayAdapter<String>(
+        ArrayAdapter<MainActivity.InfoScore> tableau = new ArrayAdapter<>(
                 listview.getContext(), R.layout.line, R.id.monTexte);
 
         try {
@@ -76,7 +65,10 @@ public class AsyncPeachnnoteJSONData extends AsyncTask<String, Void, String> {
             for (int i = 0; i < items.length(); i++) {
                 JSONObject obj = new JSONObject(items.getString(i));
                 String title = obj.getString("title");
-                tableau.add(title);
+                String scoreId = obj.getString("scoreId");
+                int pageCount = obj.getInt("pageCount");
+                MainActivity.InfoScore infoScore = new MainActivity.InfoScore(title, scoreId, pageCount);
+                tableau.add(infoScore);
             }
             listview.setAdapter(tableau);
         } catch (JSONException e) {
@@ -84,6 +76,7 @@ public class AsyncPeachnnoteJSONData extends AsyncTask<String, Void, String> {
         }
 
     }
+
 
 }
 
