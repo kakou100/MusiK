@@ -29,10 +29,13 @@ public class AsyncBitmapDownloader extends AsyncTask<String, Void, Bitmap> {
         try {
             url = new URL(params[0]);
             urlConnection = (HttpURLConnection) url.openConnection(); // Open
-            Log.i("url =", String.valueOf(url));
-            InputStream in = new BufferedInputStream(urlConnection.getInputStream());
-            Log.i("inputStream", String.valueOf(in));
+            Log.i("JFL", "URL:" + String.valueOf(url));
+            InputStream in = urlConnection.getInputStream();
             bitmap = BitmapFactory.decodeStream(in);
+            if (bitmap == null)
+            {
+                Log.i("JFL", "Error decoding image !");
+            }
             in.close();
         } catch (IOException e) {
             Log.e(TAG, e.getMessage());
@@ -45,7 +48,9 @@ public class AsyncBitmapDownloader extends AsyncTask<String, Void, Bitmap> {
     }
     @Override
     protected void onPostExecute(Bitmap bitmap) {
-        imageView.setImageBitmap(bitmap);
-    }
+        if (bitmap != null) {
+            imageView.setImageBitmap(bitmap);
+        }
+        }
 }
 

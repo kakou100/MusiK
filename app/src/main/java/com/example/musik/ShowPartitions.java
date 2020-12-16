@@ -34,10 +34,13 @@ public class ShowPartitions extends AppCompatActivity {
             }
             textView = (TextView) findViewById(R.id.textView);
             textView.setText(title);
-            imageview = (ImageView) findViewById(R.id.imageView);
+            imageview = (ImageView) findViewById(R.id.image); // bug of id here !!!
             AsyncBitmapDownloader task = new AsyncBitmapDownloader(imageview);
-            task.execute("http://www.peachnote.com/rest/api/v0/image?sid="
-                            + scoreId + "&page=1");
+
+            // The good URL seems to be:
+            // https://img.scores.peachnote.com/id/page.png
+            //task.execute("www.peachnote.com/rest/api/v0/image?sid=" + scoreId + "&page=1");
+            task.execute("https://img.scores.peachnote.com/" + scoreId + "/1.png/600");
         }
     }
 }
