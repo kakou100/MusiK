@@ -1,5 +1,7 @@
 package com.example.musik;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
@@ -12,19 +14,21 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 public class AsyncPeachnnoteJSONData extends AsyncTask<String, Void, String> {
 
     private AppCompatActivity myActivity;
 
-
     public AsyncPeachnnoteJSONData(AppCompatActivity mainActivity) {
-            myActivity = mainActivity;
+        myActivity = mainActivity;
     }
 
     @Override
@@ -76,7 +80,4 @@ public class AsyncPeachnnoteJSONData extends AsyncTask<String, Void, String> {
         }
 
     }
-
-
 }
-
