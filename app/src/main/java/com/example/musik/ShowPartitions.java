@@ -1,25 +1,36 @@
 package com.example.musik;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import static com.example.musik.MainActivity.setDefaults;
+
+
 public class ShowPartitions extends AppCompatActivity {
 
     TextView textView;
     ListView list;
+    Button mFavoritesButton;
     //ImageView imageview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.show_partitions);
+        mFavoritesButton = (Button) findViewById(R.id.activity_main_favorites_btn);
+
         Intent intent = getIntent();
+
         if (intent != null) {
             String title = "";
             String scoreId = "";
@@ -45,6 +56,17 @@ public class ShowPartitions extends AppCompatActivity {
                 //+ scoreId + "&page=1");
                 task.execute("https://img.scores.peachnote.com/" + scoreId + "/" + i + ".png/600");
             }
+            String finalTitle = title;
+            mFavoritesButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    setDefaults("title", finalTitle, ShowPartitions.this);
+                }
+            });
         }
     }
 }
+
+
+
+

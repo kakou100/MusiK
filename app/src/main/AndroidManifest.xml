@@ -21,6 +21,8 @@
         </activity>
         <activity android:name=".ShowPartitions">
         </activity>
+        <activity android:name=".Favorites">
+        </activity>
     </application>
 
 </manifest>
