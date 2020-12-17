@@ -17,10 +17,17 @@ import java.net.URL;
 
 public class AsyncBitmapDownloader extends AsyncTask<String, Void, Bitmap> {
     private final static String TAG = "AsyncBitmapDownloader";
-    private ImageView imageView;
-    public AsyncBitmapDownloader(ImageView imageView) {
-        this.imageView = imageView;
+    BitmapAdapter adapter_ = null;
+   // private ImageView imageView;
+   // public AsyncBitmapDownloader(ImageView imageView) {
+   //     this.imageView = imageView;
+   // }
+
+    public AsyncBitmapDownloader(BitmapAdapter adapter) {
+
+        adapter_ = adapter;
     }
+
     @Override
     protected Bitmap doInBackground(String... params) {
         URL url = null;
@@ -29,14 +36,19 @@ public class AsyncBitmapDownloader extends AsyncTask<String, Void, Bitmap> {
         try {
             url = new URL(params[0]);
             urlConnection = (HttpURLConnection) url.openConnection(); // Open
-            Log.i("url =", String.valueOf(url));
-            InputStream in = new BufferedInputStream(urlConnection.getInputStream());
-            Log.i("inputStream", String.valueOf(in));
+            Log.i("JFL", "URL:" + String.valueOf(url));
+            InputStream in = urlConnection.getInputStream();
             bitmap = BitmapFactory.decodeStream(in);
+            if (bitmap == null)
+            {
+                Log.i("JFL", "Error decoding image !");
+            }
             in.close();
-        } catch (IOException e) {
-            Log.e(TAG, e.getMessage());
         }
+        catch (MalformedURLException e) { e.printStackTrace(); }
+        catch (IOException e) {
+                e.printStackTrace();
+            }
         finally {
             if (urlConnection != null)
                 urlConnection.disconnect();
@@ -45,7 +57,11 @@ public class AsyncBitmapDownloader extends AsyncTask<String, Void, Bitmap> {
     }
     @Override
     protected void onPostExecute(Bitmap bitmap) {
-        imageView.setImageBitmap(bitmap);
+        if (bitmap != null) {
+            //imageView.setImageBitmap(bitmap);
+            Log.i("CIO", "Image received !");
+            adapter_.add(bitmap);
+            adapter_.notifyDataSetChanged();
+        }
     }
 }
-
